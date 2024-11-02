@@ -28,7 +28,12 @@ else
   GUESSES=1
   while [[ $GUESS != $SECRET ]]
   do
-    echo "It's lower than that, guess again:"
+    if [[ $GUESS < $SECRET ]]
+    then
+      echo "It's lower than that, guess again:"
+    else
+      echo "It's higher than that, guess again:"
+    fi
     read GUESS
     ((GUESSES++))
   done
