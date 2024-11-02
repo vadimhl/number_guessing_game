@@ -21,5 +21,9 @@ else
     BEST_GAME=$(echo $GAMES_INFO | sed -r 's/.*\|([0-9]+)$/\1/')
     echo "Welcome back, $NAME! You have played $GAMES games, and your best game took $BEST_GAME guesses."
   fi
+  SECRET=$(( RANDOM % 1000 + 1 ))
+  echo "SECRET=$SECRET"
+  echo Guess the secret number between 1 and 1000:
+  
   
 fi
