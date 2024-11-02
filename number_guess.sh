@@ -9,14 +9,20 @@ if [[ -z $NAME ]]
 then
   exit
 else
-  USER_ID=$($PSQL "select user_id from users where name = '$NAME'")
+  USER_ID=$($PSQL "select user_id 
+                   from users 
+                   where name = '$NAME'")
   if [[ -z $USER_ID ]]
   then
     echo "Welcome, $NAME! It looks like this is your first time here."
-    INSERT_RESULT=$($PSQL "insert into users(name) values('$NAME') RETURNING user_id")
+    INSERT_RESULT=$($PSQL "insert into users(name) 
+                           values('$NAME') 
+                           RETURNING user_id")
     USER_ID=$(echo $INSERT_RESULT | sed -r 's/([0-9]+).*/\1/')
   else
-    GAMES_INFO=$($PSQL "SELECT count(*), min(guesses) from games where user_id = $USER_ID")
+    GAMES_INFO=$($PSQL "SELECT count(*), min(guesses) 
+                        from games 
+                        where user_id = $USER_ID")
     GAMES=$(echo $GAMES_INFO | sed -r 's/^([0-9]+)\|.*/\1/')
     BEST_GAME=$(echo $GAMES_INFO | sed -r 's/.*\|([0-9]+)$/\1/')
     echo "Welcome back, $NAME! You have played $GAMES games, and your best game took $BEST_GAME guesses."
