@@ -32,11 +32,16 @@ else
   GUESSES=1
   while [[ $GUESS != $SECRET ]]
   do
-    if [[ $GUESS < $SECRET ]]
+    if [[ $GUESS =~ ^[0-9]+$ ]]
     then
-      echo "It's lower than that, guess again:"
+      if [[ $GUESS < $SECRET ]]
+      then
+        echo "It's lower than that, guess again:"
+      else
+        echo "It's higher than that, guess again:"
+      fi
     else
-      echo "It's higher than that, guess again:"
+      echo "That is not an integer, guess again:"
     fi
     read GUESS
     ((GUESSES++))
