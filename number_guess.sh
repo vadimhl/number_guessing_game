@@ -22,7 +22,6 @@ else
     echo "Welcome back, $NAME! You have played $GAMES games, and your best game took $BEST_GAME guesses."
   fi
   SECRET=$(( RANDOM % 1000 + 1 ))
-  echo "SECRET=$SECRET"
   echo Guess the secret number between 1 and 1000:
   read GUESS
   GUESSES=1
@@ -37,6 +36,8 @@ else
     read GUESS
     ((GUESSES++))
   done
+  INSERT_RESULT=$($PSQL "insert into games (user_id, secret, guesses)
+                         values ($USER_ID, $SECRET, $GUESSES)")
   echo "You guessed it in $GUESSES tries. The secret number was $SECRET. Nice job!"
   
 fi
